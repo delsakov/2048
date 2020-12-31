@@ -238,11 +238,14 @@ def game(action):
             over = 2
     if over == 1:
         label = tk.Label(master, text="            GAME OVER!            ", font=("Helvetica", 15, 'bold')).grid(row=0, column=0, pady=3, columnspan=8)
+        print("No empty cells left - you have lost.")
     if over == 2:
         label = tk.Label(master, text="            YOU WIN!            ", font=("Helvetica", 15, 'bold')).grid(row=0, column=0, pady=3, columnspan=8)
+        print("You collected 2048 - you won!")
 
 
 # ______________________________________MAIN PROGRAM______________________________________
+print("Game started - please do NOT close this window.")
 over = 0
 board = random_start_board(4)
 master = tk.Tk()
