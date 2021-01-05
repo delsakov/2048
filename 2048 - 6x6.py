@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import *
 import random
+import copy
 
 def sum_2048(board, action):
     
@@ -314,6 +315,14 @@ def refresh_board(board):
         board_5_5.insert(0, board[5][5])
 
 
+def undo():
+    global board, board_history
+    if len(board_history) > 1:
+        board_history = board_history[:-1]
+        board = copy.deepcopy(board_history[-1])
+    refresh_board(board)
+
+
 def left():
     game('Left')
 
@@ -331,10 +340,13 @@ def down():
 
 
 def game(action):
-    global board, total, max_num, over, label
+    global board, total, max_num, over, label, board_history
     if over == 0:
         board = sum_2048(board, action)
         board = add_random_num(board)
+        board_history.append(copy.deepcopy(board))
+        # Alternative way to working with mutable list od lists:
+        # board_history.append([lst.copy() for lst in board.copy()])
         refresh_board(board)
     if over == 0:
         total = tk.Label(master, text="Total score: {}".format(calculate_total(board)), font=("Helvetica", 10)).grid(row=1, column=0, pady=3, columnspan=5)
@@ -345,7 +357,7 @@ def game(action):
         label = tk.Label(master, text="            GAME OVER!            ", font=("Helvetica", 15, 'bold')).grid(row=0, column=0, pady=3, columnspan=10)
         print("No empty cells left - you have lost.")
     if over == 2:
-        label = tk.Label(master, text="            YOU WIN!            ", font=("Helvetica", 15, 'bold')).grid(row=0, column=0, pady=3, columnspan=10)
+        label = tk.Label(master, text="          YOU ARE WINNER!         ", font=("Helvetica", 15, 'bold')).grid(row=0, column=0, pady=3, columnspan=10)
         print("You collected 2048 - you won!")
 
 
@@ -353,16 +365,19 @@ def game(action):
 print("Game started - please do NOT close this window.")
 over = 0
 board = random_start_board(6)
+board_history = [copy.deepcopy(board)]
+# board_history = [[lst.copy() for lst in board.copy()]]  # alternative way to working with mutable list od lists
 master = tk.Tk()
+load_board(board)
 Title = master.title("2048 Game")
-label = tk.Label(master, text="Please use buttons for moving cells", font=("Helvetica", 10)).grid(row=0, column=0, pady=3, columnspan=10)
+label = tk.Label(master, text="Please use buttons for moving cells", font=("Helvetica", 12)).grid(row=0, column=0, pady=3, columnspan=10)
 total = tk.Label(master, text="Total score: {}".format(calculate_total(board)), font=("Helvetica", 10)).grid(row=1, column=0, pady=3, columnspan=5)
 max_num = tk.Label(master, text="Max element: {}".format(check_max_num(board)), font=("Helvetica", 10)).grid(row=1, column=5, columnspan=5)
-load_board(board)
 tk.Button(master, text='<-', font=("Helvetica", 9, "bold"), command=left, width=5).grid(row=4, column=7, pady=0, padx=5, columnspan=1, rowspan=2, stick=W)
 tk.Button(master, text='->', font=("Helvetica", 9, "bold"), command=right, width=5).grid(row=4, column=9, pady=0, padx=5, columnspan=1, rowspan=2, stick=W)
 tk.Button(master, text='^', font=("Helvetica", 9, "bold"), command=up, width=5).grid(row=2, column=8, pady=0, padx=5, rowspan=2, stick=W)
 tk.Button(master, text='v', font=("Helvetica", 9, "bold"), command=down, width=5).grid(row=6, column=8, pady=0, padx=5, rowspan=2, stick=W)
+tk.Button(master, text='Undo', font=("Helvetica", 9, "bold"), command=undo, width=5).grid(row=4, column=8, pady=0, padx=5, rowspan=2, stick=W)
 tk.Button(master, text='Quit', font=("Helvetica", 9, "bold"), command=master.quit, width=20, heigh=2).grid(row=8, column=0, pady=5, columnspan=10)
 
 tk.mainloop()
