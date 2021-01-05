@@ -54,7 +54,6 @@ def sum_2048(board, action):
 
 
 def add_random_num(board):
-    global label, over
     empty_cells = []
     rand_num = [1, 2, 4]
     for i in range(len(board)):
@@ -63,8 +62,7 @@ def add_random_num(board):
                 empty_cells.append([i, j])
     total_empty = len(empty_cells)
     if total_empty == 0:
-        over = 1
-        return
+        return board
     add_cell = random.randrange(0, total_empty, 1)
     board[empty_cells[add_cell][0]][empty_cells[add_cell][1]] = random.choice(rand_num)
     return board
@@ -239,87 +237,89 @@ def load_board(board):
 
 
 def refresh_board(board):
-    global over
-    if over == 0:
-        board_0_0.delete(0, END)
-        board_0_1.delete(0, END)
-        board_0_2.delete(0, END)
-        board_0_3.delete(0, END)
-        board_0_4.delete(0, END)
-        board_0_5.delete(0, END)
-        board_1_0.delete(0, END)
-        board_1_1.delete(0, END)
-        board_1_2.delete(0, END)
-        board_1_3.delete(0, END)
-        board_1_4.delete(0, END)
-        board_1_5.delete(0, END)
-        board_2_0.delete(0, END)
-        board_2_1.delete(0, END)
-        board_2_2.delete(0, END)
-        board_2_3.delete(0, END)
-        board_2_4.delete(0, END)
-        board_2_5.delete(0, END)
-        board_3_0.delete(0, END)
-        board_3_1.delete(0, END)
-        board_3_2.delete(0, END)
-        board_3_3.delete(0, END)
-        board_3_4.delete(0, END)
-        board_3_5.delete(0, END)
-        board_4_0.delete(0, END)
-        board_4_1.delete(0, END)
-        board_4_2.delete(0, END)
-        board_4_3.delete(0, END)
-        board_4_4.delete(0, END)
-        board_4_5.delete(0, END)
-        board_5_0.delete(0, END)
-        board_5_1.delete(0, END)
-        board_5_2.delete(0, END)
-        board_5_3.delete(0, END)
-        board_5_4.delete(0, END)
-        board_5_5.delete(0, END)
-        board_0_0.insert(0, board[0][0])
-        board_0_1.insert(0, board[0][1])
-        board_0_2.insert(0, board[0][2])
-        board_0_3.insert(0, board[0][3])
-        board_0_4.insert(0, board[0][4])
-        board_0_5.insert(0, board[0][5])
-        board_1_0.insert(0, board[1][0])
-        board_1_1.insert(0, board[1][1])
-        board_1_2.insert(0, board[1][2])
-        board_1_3.insert(0, board[1][3])
-        board_1_4.insert(0, board[1][4])
-        board_1_5.insert(0, board[1][5])
-        board_2_0.insert(0, board[2][0])
-        board_2_1.insert(0, board[2][1])
-        board_2_2.insert(0, board[2][2])
-        board_2_3.insert(0, board[2][3])
-        board_2_4.insert(0, board[2][4])
-        board_2_5.insert(0, board[2][5])
-        board_3_0.insert(0, board[3][0])
-        board_3_1.insert(0, board[3][1])
-        board_3_2.insert(0, board[3][2])
-        board_3_3.insert(0, board[3][3])
-        board_3_4.insert(0, board[3][4])
-        board_3_5.insert(0, board[3][5])
-        board_4_0.insert(0, board[4][0])
-        board_4_1.insert(0, board[4][1])
-        board_4_2.insert(0, board[4][2])
-        board_4_3.insert(0, board[4][3])
-        board_4_4.insert(0, board[4][4])
-        board_4_5.insert(0, board[4][5])
-        board_5_0.insert(0, board[5][0])
-        board_5_1.insert(0, board[5][1])
-        board_5_2.insert(0, board[5][2])
-        board_5_3.insert(0, board[5][3])
-        board_5_4.insert(0, board[5][4])
-        board_5_5.insert(0, board[5][5])
+    board_0_0.delete(0, END)
+    board_0_1.delete(0, END)
+    board_0_2.delete(0, END)
+    board_0_3.delete(0, END)
+    board_0_4.delete(0, END)
+    board_0_5.delete(0, END)
+    board_1_0.delete(0, END)
+    board_1_1.delete(0, END)
+    board_1_2.delete(0, END)
+    board_1_3.delete(0, END)
+    board_1_4.delete(0, END)
+    board_1_5.delete(0, END)
+    board_2_0.delete(0, END)
+    board_2_1.delete(0, END)
+    board_2_2.delete(0, END)
+    board_2_3.delete(0, END)
+    board_2_4.delete(0, END)
+    board_2_5.delete(0, END)
+    board_3_0.delete(0, END)
+    board_3_1.delete(0, END)
+    board_3_2.delete(0, END)
+    board_3_3.delete(0, END)
+    board_3_4.delete(0, END)
+    board_3_5.delete(0, END)
+    board_4_0.delete(0, END)
+    board_4_1.delete(0, END)
+    board_4_2.delete(0, END)
+    board_4_3.delete(0, END)
+    board_4_4.delete(0, END)
+    board_4_5.delete(0, END)
+    board_5_0.delete(0, END)
+    board_5_1.delete(0, END)
+    board_5_2.delete(0, END)
+    board_5_3.delete(0, END)
+    board_5_4.delete(0, END)
+    board_5_5.delete(0, END)
+    board_0_0.insert(0, board[0][0])
+    board_0_1.insert(0, board[0][1])
+    board_0_2.insert(0, board[0][2])
+    board_0_3.insert(0, board[0][3])
+    board_0_4.insert(0, board[0][4])
+    board_0_5.insert(0, board[0][5])
+    board_1_0.insert(0, board[1][0])
+    board_1_1.insert(0, board[1][1])
+    board_1_2.insert(0, board[1][2])
+    board_1_3.insert(0, board[1][3])
+    board_1_4.insert(0, board[1][4])
+    board_1_5.insert(0, board[1][5])
+    board_2_0.insert(0, board[2][0])
+    board_2_1.insert(0, board[2][1])
+    board_2_2.insert(0, board[2][2])
+    board_2_3.insert(0, board[2][3])
+    board_2_4.insert(0, board[2][4])
+    board_2_5.insert(0, board[2][5])
+    board_3_0.insert(0, board[3][0])
+    board_3_1.insert(0, board[3][1])
+    board_3_2.insert(0, board[3][2])
+    board_3_3.insert(0, board[3][3])
+    board_3_4.insert(0, board[3][4])
+    board_3_5.insert(0, board[3][5])
+    board_4_0.insert(0, board[4][0])
+    board_4_1.insert(0, board[4][1])
+    board_4_2.insert(0, board[4][2])
+    board_4_3.insert(0, board[4][3])
+    board_4_4.insert(0, board[4][4])
+    board_4_5.insert(0, board[4][5])
+    board_5_0.insert(0, board[5][0])
+    board_5_1.insert(0, board[5][1])
+    board_5_2.insert(0, board[5][2])
+    board_5_3.insert(0, board[5][3])
+    board_5_4.insert(0, board[5][4])
+    board_5_5.insert(0, board[5][5])
 
 
 def undo():
-    global board, board_history
+    global board, board_history, total, max_num, label, turns
     if len(board_history) > 1:
         board_history = board_history[:-1]
         board = copy.deepcopy(board_history[-1])
+        total = tk.Label(master, text="Total score:  {}  ".format(calculate_total(board)), font=("Helvetica", 10)).grid(row=1, column=0, pady=3, columnspan=4)
+        max_num = tk.Label(master, text="Max element:  {}  ".format(check_max_num(board)), font=("Helvetica", 10)).grid(row=1, column=4, columnspan=4)
+        label = tk.Label(master, text="Please use buttons for moving cells", font=("Helvetica", 12)).grid(row=0, column=0, pady=3, columnspan=10)
+        turns = tk.Label(master, text="Turns: {}  ".format(len(board_history)), font=("Helvetica", 10)).grid(row=1, column=8, columnspan=3)
     refresh_board(board)
 
 
@@ -340,30 +340,29 @@ def down():
 
 
 def game(action):
-    global board, total, max_num, over, label, board_history
-    if over == 0:
-        board = sum_2048(board, action)
-        board = add_random_num(board)
-        board_history.append(copy.deepcopy(board))
-        # Alternative way to working with mutable list od lists:
-        # board_history.append([lst.copy() for lst in board.copy()])
-        refresh_board(board)
-    if over == 0:
-        total = tk.Label(master, text="Total score: {}".format(calculate_total(board)), font=("Helvetica", 10)).grid(row=1, column=0, pady=3, columnspan=5)
-        max_num = tk.Label(master, text="Max element: {}".format(check_max_num(board)), font=("Helvetica", 10)).grid(row=1, column=5, columnspan=5)
-        if check_max_num(board) >= 2048:
-            over = 2
-    if over == 1:
-        label = tk.Label(master, text="            GAME OVER!            ", font=("Helvetica", 15, 'bold')).grid(row=0, column=0, pady=3, columnspan=10)
-        print("No empty cells left - you have lost.")
-    if over == 2:
+    global board, board_history, total, max_num, label, turns
+    old_board = copy.deepcopy(board)
+    board = sum_2048(board, action)
+    board = add_random_num(board)
+    board_history.append(copy.deepcopy(board))
+    # Alternative way to working with mutable list od lists:
+    # board_history.append([lst.copy() for lst in board.copy()])
+    refresh_board(board)
+    if check_max_num(board) >= 2048:
         label = tk.Label(master, text="          YOU ARE WINNER!         ", font=("Helvetica", 15, 'bold')).grid(row=0, column=0, pady=3, columnspan=10)
         print("You collected 2048 - you won!")
+    elif board == old_board:
+        label = tk.Label(master, text="            GAME OVER!            ", font=("Helvetica", 15, 'bold')).grid(row=0, column=0, pady=3, columnspan=10)
+        print("No empty cells left - you have lost.")
+    else:
+        label = tk.Label(master, text="Please use buttons for moving cells", font=("Helvetica", 12)).grid(row=0, column=0, pady=3, columnspan=10)
+    turns = tk.Label(master, text="Turns: {}  ".format(len(board_history)), font=("Helvetica", 10)).grid(row=1, column=8, columnspan=3)
+    total = tk.Label(master, text="Total score:  {}  ".format(calculate_total(board)), font=("Helvetica", 10)).grid(row=1, column=0, pady=3, columnspan=4)
+    max_num = tk.Label(master, text="Max element:  {}  ".format(check_max_num(board)), font=("Helvetica", 10)).grid(row=1, column=4, columnspan=4)
 
 
 # ______________________________________MAIN PROGRAM______________________________________
 print("Game started - please do NOT close this window.")
-over = 0
 board = random_start_board(6)
 board_history = [copy.deepcopy(board)]
 # board_history = [[lst.copy() for lst in board.copy()]]  # alternative way to working with mutable list od lists
@@ -371,8 +370,9 @@ master = tk.Tk()
 load_board(board)
 Title = master.title("2048 Game")
 label = tk.Label(master, text="Please use buttons for moving cells", font=("Helvetica", 12)).grid(row=0, column=0, pady=3, columnspan=10)
-total = tk.Label(master, text="Total score: {}".format(calculate_total(board)), font=("Helvetica", 10)).grid(row=1, column=0, pady=3, columnspan=5)
-max_num = tk.Label(master, text="Max element: {}".format(check_max_num(board)), font=("Helvetica", 10)).grid(row=1, column=5, columnspan=5)
+total = tk.Label(master, text="Total score: {}".format(calculate_total(board)), font=("Helvetica", 10)).grid(row=1, column=0, pady=3, columnspan=4)
+max_num = tk.Label(master, text="Max element: {}".format(check_max_num(board)), font=("Helvetica", 10)).grid(row=1, column=4, columnspan=4)
+turns = tk.Label(master, text="Turns: {}".format(len(board_history)), font=("Helvetica", 10)).grid(row=1, column=8, columnspan=3)
 tk.Button(master, text='<-', font=("Helvetica", 9, "bold"), command=left, width=5).grid(row=4, column=7, pady=0, padx=5, columnspan=1, rowspan=2, stick=W)
 tk.Button(master, text='->', font=("Helvetica", 9, "bold"), command=right, width=5).grid(row=4, column=9, pady=0, padx=5, columnspan=1, rowspan=2, stick=W)
 tk.Button(master, text='^', font=("Helvetica", 9, "bold"), command=up, width=5).grid(row=2, column=8, pady=0, padx=5, rowspan=2, stick=W)
